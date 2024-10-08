@@ -1,2 +1,4 @@
-package lk.ijse.aadpossyastembackendassignment.service;public class CustomerServiceImpl {
+package lk.ijse.aadpossyastembackendassignment.service;
+
+public class CustomerServiceImpl implements CustomerService {
 }
