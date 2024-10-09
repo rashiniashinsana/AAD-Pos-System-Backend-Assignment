@@ -1,2 +1,4 @@
-package lk.ijse.aadpossyastembackendassignment.customObj;public interface CustomerResponse {
+package lk.ijse.aadpossyastembackendassignment.customObj;
+
+public interface CustomerResponse {
 }
