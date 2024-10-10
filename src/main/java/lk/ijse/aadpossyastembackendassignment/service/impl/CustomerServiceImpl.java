@@ -5,7 +5,7 @@ import lk.ijse.aadpossyastembackendassignment.customObj.CustomerResponse;
 import lk.ijse.aadpossyastembackendassignment.dao.CustomerDAO;
 import lk.ijse.aadpossyastembackendassignment.dto.impl.CustomerDTO;
 import lk.ijse.aadpossyastembackendassignment.entity.CustomerEntity;
-import lk.ijse.aadpossyastembackendassignment.exception.CustomerNotFoundExeption;
+import lk.ijse.aadpossyastembackendassignment.exception.CustomerNotFoundException;
 import lk.ijse.aadpossyastembackendassignment.exception.DataPersistFailedException;
 import lk.ijse.aadpossyastembackendassignment.service.CustomerService;
 import lk.ijse.aadpossyastembackendassignment.util.AppUtil;
@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(CustomerDTO customerDTO) {
         Optional<CustomerEntity> tmpUser = customerDAO.findById(customerDTO.getId());
         if(!tmpUser.isPresent()){
-            throw new CustomerNotFoundExeption("Customer not found");
+            throw new CustomerNotFoundException("Customer not found");
         }else {
             tmpUser.get().setId(customerDTO.getId());
             tmpUser.get().setName(customerDTO.getName());
@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Optional<CustomerEntity> selectedCustomerId = customerDAO.findById(customerId);
         if(!selectedCustomerId.isPresent()){
-            throw new CustomerNotFoundExeption("Customer not found");
+            throw new CustomerNotFoundException("Customer not found");
         }else {
             customerDAO.deleteById(customerId);
         }
@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
             Optional<CustomerEntity> userEntityByUserId = customerDAO.findById(customerId);
             return mapping.convertToDTO(userEntityByUserId.orElse(null));
         }else {
-            throw  new CustomerNotFoundExeption("Customer not found");
+            throw  new CustomerNotFoundException("Customer not found");
         }
     }
 
