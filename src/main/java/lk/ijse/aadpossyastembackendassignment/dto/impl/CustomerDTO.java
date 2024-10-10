@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +16,5 @@ public class CustomerDTO implements SuperDTO, CustomerResponse {
     private String name;
     private  String address;
     private Double salary;
-    private List<CustomerDTO> customers = new ArrayList<>();
 }
 
