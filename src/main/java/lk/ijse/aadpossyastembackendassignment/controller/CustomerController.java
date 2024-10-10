@@ -2,10 +2,9 @@ package lk.ijse.aadpossyastembackendassignment.controller;
 
 import lk.ijse.aadpossyastembackendassignment.customObj.CustomerResponse;
 import lk.ijse.aadpossyastembackendassignment.dto.impl.CustomerDTO;
-import lk.ijse.aadpossyastembackendassignment.exception.CustomerNotFoundExeption;
+import lk.ijse.aadpossyastembackendassignment.exception.CustomerNotFoundException;
 import lk.ijse.aadpossyastembackendassignment.exception.DataPersistFailedException;
 import lk.ijse.aadpossyastembackendassignment.service.CustomerService;
-import lk.ijse.aadpossyastembackendassignment.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +40,7 @@ public class CustomerController {
             customerService.updateCustomer(customerDTO);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (CustomerNotFoundExeption e){
+        }catch (CustomerNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e) {
             return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -53,7 +52,7 @@ public class CustomerController {
         try {
             customerService.deleteCustomer(customerId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (CustomerNotFoundExeption e) {
+        } catch (CustomerNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
