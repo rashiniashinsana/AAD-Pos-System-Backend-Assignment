@@ -1,4 +1,4 @@
-package lk.ijse.aadpossyastembackendassignment.service;
+package lk.ijse.aadpossyastembackendassignment.service.impl;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.aadpossyastembackendassignment.customObj.CustomerResponse;
@@ -7,6 +7,7 @@ import lk.ijse.aadpossyastembackendassignment.dto.impl.CustomerDTO;
 import lk.ijse.aadpossyastembackendassignment.entity.CustomerEntity;
 import lk.ijse.aadpossyastembackendassignment.exception.CustomerNotFoundExeption;
 import lk.ijse.aadpossyastembackendassignment.exception.DataPersistFailedException;
+import lk.ijse.aadpossyastembackendassignment.service.CustomerService;
 import lk.ijse.aadpossyastembackendassignment.util.AppUtil;
 import lk.ijse.aadpossyastembackendassignment.util.Mapping;
 import lombok.RequiredArgsConstructor;
@@ -50,11 +51,22 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomer(String customerId) {
 
+        Optional<CustomerEntity> selectedCustomerId = customerDAO.findById(customerId);
+        if(!selectedCustomerId.isPresent()){
+            throw new CustomerNotFoundExeption("Customer not found");
+        }else {
+            customerDAO.deleteById(customerId);
+        }
     }
 
     @Override
     public CustomerResponse getSelectedCustomer(String customerId) {
-        return null;
+        if(customerDAO.existsById(customerId)){
+            Optional<CustomerEntity> userEntityByUserId = customerDAO.findById(customerId);
+            return mapping.convertToDTO(userEntityByUserId.orElse(null));
+        }else {
+            throw  new CustomerNotFoundExeption("Customer not found");
+        }
     }
 
     @Override
