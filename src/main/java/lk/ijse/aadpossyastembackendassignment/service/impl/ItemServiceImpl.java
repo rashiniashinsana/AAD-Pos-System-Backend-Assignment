@@ -1,6 +1,7 @@
 package lk.ijse.aadpossyastembackendassignment.service.impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.aadpossyastembackendassignment.customObj.ItemErrorResponse;
 import lk.ijse.aadpossyastembackendassignment.customObj.ItemResponse;
 import lk.ijse.aadpossyastembackendassignment.dao.ItemDAO;
 import lk.ijse.aadpossyastembackendassignment.dto.impl.ItemDTO;
@@ -32,16 +33,23 @@ public class ItemServiceImpl implements ItemService {
 
    @Override
    public List<ItemDTO> getAllItems() {
-      return List.of();
+      return mapping.convertToDTO(itemDAO.findAll());
+
+   }
+
+
+   @Override
+   public ItemResponse getSelectedItem(String itemId) {
+
+      if(itemDAO.existsById(itemId)){
+         return mapping.convertToDTO(itemDAO.getReferenceById(itemId));
+      }else {
+         return new ItemErrorResponse(0,"Item not found");
+      }
    }
 
    @Override
-   public ItemResponse getSelectedNote(String noteId) {
-      return null;
-   }
-
-   @Override
-   public void updateItem(String itemId, ItemDTO item) {
+   public void updateItem(ItemDTO item) {
 
    }
 
