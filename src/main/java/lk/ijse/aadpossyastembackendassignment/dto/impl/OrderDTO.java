@@ -6,15 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class OrderDTO implements SuperDTO, OrderResponse {
     private String id;
-    private String date;
+    private Timestamp date;
     private String customerId;
+    private List<OrderDetailsDTO> orderDetailDTOS = new ArrayList<>();
     private double total;
-    private String discount;
+    private double discount;
     private double subTotal;
     private double cash;
     private double balance;
