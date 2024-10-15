@@ -10,9 +10,9 @@ public interface ItemService {
 
     List<ItemDTO> getAllItems();
 
-    ItemResponse getSelectedItem(String noteId);
+    ItemResponse getSelectedItem(String itemId);
 
     void deleteItem(String itemId);
 
-    void updateItem(String itemId);
+    void updateItem(ItemDTO itemDTO);
 }

@@ -1,6 +1,7 @@
 package lk.ijse.aadpossyastembackendassignment.service.impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.aadpossyastembackendassignment.customObj.CustomerErrorResponse;
 import lk.ijse.aadpossyastembackendassignment.customObj.CustomerResponse;
 import lk.ijse.aadpossyastembackendassignment.dao.CustomerDAO;
 import lk.ijse.aadpossyastembackendassignment.dto.impl.CustomerDTO;
@@ -25,26 +26,27 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerDAO customerDAO;
     @Autowired
     private final Mapping mapping;
+
     @Override
-    public void saveCustomer(CustomerDTO customerDTO){
+    public void saveCustomer(CustomerDTO customerDTO) {
         customerDTO.setId(AppUtil.createCustomerId());
         CustomerEntity savedCustomer =
                 customerDAO.save(mapping.convertToCustomerEntity(customerDTO));
-        if(savedCustomer == null ) {
+        if (savedCustomer == null) {
             throw new DataPersistFailedException("Cannot data saved");
         }
     }
 
     @Override
     public void updateCustomer(CustomerDTO customerDTO) {
-        Optional<CustomerEntity> tmpUser = customerDAO.findById(customerDTO.getId());
-        if(!tmpUser.isPresent()){
+        Optional<CustomerEntity> tmpCustomer = customerDAO.findById(customerDTO.getId());
+        if (!tmpCustomer.isPresent()) {
             throw new CustomerNotFoundException("Customer not found");
-        }else {
-            tmpUser.get().setId(customerDTO.getId());
-            tmpUser.get().setName(customerDTO.getName());
-            tmpUser.get().setAddress(customerDTO.getAddress());
-            tmpUser.get().setSalary(customerDTO.getSalary());
+        } else {
+            tmpCustomer.get().setId(customerDTO.getId());
+            tmpCustomer.get().setName(customerDTO.getName());
+            tmpCustomer.get().setAddress(customerDTO.getAddress());
+            tmpCustomer.get().setSalary(customerDTO.getSalary());
         }
     }
 
@@ -52,25 +54,29 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(String customerId) {
 
         Optional<CustomerEntity> selectedCustomerId = customerDAO.findById(customerId);
-        if(!selectedCustomerId.isPresent()){
+        if (!selectedCustomerId.isPresent()) {
             throw new CustomerNotFoundException("Customer not found");
-        }else {
+        } else {
             customerDAO.deleteById(customerId);
         }
     }
 
     @Override
     public CustomerResponse getSelectedCustomer(String customerId) {
-        if(customerDAO.existsById(customerId)){
-            Optional<CustomerEntity> userEntityByUserId = customerDAO.findById(customerId);
-            return mapping.convertToDTO(userEntityByUserId.orElse(null));
-        }else {
-            throw  new CustomerNotFoundException("Customer not found");
+        if (customerDAO.existsById(customerId)) {
+            CustomerEntity customerEntity = customerDAO.getCustomerEntitiesById(customerId);
+            return mapping.convertToDTO(customerEntity);
+        } else {
+            return new CustomerErrorResponse(0, "Customer not found");
         }
     }
 
     @Override
-    public List<CustomerDTO> getAllUsers() {
-        return List.of();
+    public List<CustomerDTO> getAllCustomers() {
+        List<CustomerEntity>getAllCustomers = customerDAO.findAll();
+        return mapping.convertToDTOList(getAllCustomers);
     }
+
+
+
 }

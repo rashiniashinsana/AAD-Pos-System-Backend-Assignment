@@ -25,20 +25,19 @@ public class ItemController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addItem(@RequestBody ItemDTO item) {
-        if (item == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
+
             try {
                 itemService.saveItem(item);
+                System.out.println("ItemDto"+item);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } catch (DataPersistFailedException e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+
     }
-    @GetMapping(value = "allItems", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ItemDTO> getAllItems(){
         return itemService.getAllItems();
     }
@@ -64,7 +63,7 @@ public class ItemController {
 //        }
          try {
              itemDTO.setCode(itemId);
-             itemService.updateItem(itemId);
+             itemService.updateItem(itemDTO);
 
              return new ResponseEntity<>(HttpStatus.NO_CONTENT);
          } catch (CustomerNotFoundException e) {

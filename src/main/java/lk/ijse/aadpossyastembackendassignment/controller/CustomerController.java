@@ -48,7 +48,7 @@ public class CustomerController {
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable ("id") String customerId) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable ("id") String customerId) {
         try {
             customerService.deleteCustomer(customerId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -59,12 +59,12 @@ public class CustomerController {
         }
     }
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomerResponse getSelectedUser(@PathVariable ("id") String customerId){
+    public CustomerResponse getSelectedCustomer(@PathVariable ("id") String customerId){
         return customerService.getSelectedCustomer(customerId);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CustomerDTO> getAllUsers(){
-        return customerService.getAllUsers();
+    public List<CustomerDTO> getAllCustomer(){
+        return customerService.getAllCustomers();
     }
 
 
