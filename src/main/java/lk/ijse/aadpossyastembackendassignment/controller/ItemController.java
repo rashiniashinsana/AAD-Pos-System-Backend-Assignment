@@ -64,7 +64,7 @@ public class ItemController {
 //        }
          try {
              itemDTO.setCode(itemId);
-             itemService.updateItem(itemDTO);
+             itemService.updateItem(itemId);
 
              return new ResponseEntity<>(HttpStatus.NO_CONTENT);
          } catch (CustomerNotFoundException e) {
