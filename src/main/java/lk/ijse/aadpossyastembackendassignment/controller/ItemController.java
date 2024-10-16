@@ -50,17 +50,6 @@ public class ItemController {
     }
      @PatchMapping(value = "/{itemCode}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateItem(@PathVariable ("itemCode") String itemId, @RequestBody ItemDTO itemDTO) {
-         //        try {
-//            if (item == null && (itemId == null || item.equals(""))){
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
-//            itemService.updateItem(itemId, item);
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }catch (ItemNotFoundException e){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
          try {
              itemDTO.setCode(itemId);
              itemService.updateItem(itemDTO);
@@ -72,7 +61,7 @@ public class ItemController {
              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
          }
      }
-    @DeleteMapping(value ="/{itemCode}" )
+    @DeleteMapping(value ="/{itemId}" )
     public ResponseEntity<Void> deleteItem(@PathVariable ("itemId") String itemId) {
         try {
             itemService.deleteItem(itemId);
