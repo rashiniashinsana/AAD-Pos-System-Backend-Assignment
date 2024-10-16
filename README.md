@@ -59,10 +59,10 @@ while maintaining scalability and flexibility.
 - #### List Orders: `GET /order` - Retrieve a list of all orders.
 ## Getting Started
 
-1. Prerequisites: Ensure you have a Java EE environment set up and Tomcat installed.
-2. Clone the Repository: Run `git clone https://github.com/rashiniashinsana/AAD-Pos-Syastem-Backend-Assignment.git` to get the source code.
-3. Set Up the Database: Configure your database settings in the `application.properties` file.
-4. Build and Run: Deploy the WAR file to Tomcat and start the application.
+1. Clone the Repository: Run `git clone https://github.com/rashiniashinsana/AAD-Pos-Syastem-Backend-Assignment.git` to get the source code.
+2. Set Up the Database: Configure your database settings in the `WebAppRootConfig` file.
+3. Build and Run: Deploy the WAR file to Tomcat and start the application.
+   
 ## API Documentation
 
 For comprehensive API endpoints and usage instructions, please check out the [Postman Documentation](https://documenter.getpostman.com/view/36642476/2sAXxV5pbb).
