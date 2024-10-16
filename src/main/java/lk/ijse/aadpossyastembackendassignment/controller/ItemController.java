@@ -37,6 +37,7 @@ public class ItemController {
             }
 
     }
+
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ItemDTO> getAllItems(){
         return itemService.getAllItems();
@@ -48,6 +49,7 @@ public class ItemController {
         }
 
     }
+
      @PatchMapping(value = "/{itemCode}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateItem(@PathVariable ("itemCode") String itemId, @RequestBody ItemDTO itemDTO) {
          try {
@@ -61,6 +63,7 @@ public class ItemController {
              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
          }
      }
+
     @DeleteMapping(value ="/{itemId}" )
     public ResponseEntity<Void> deleteItem(@PathVariable ("itemId") String itemId) {
         try {
@@ -72,4 +75,5 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
