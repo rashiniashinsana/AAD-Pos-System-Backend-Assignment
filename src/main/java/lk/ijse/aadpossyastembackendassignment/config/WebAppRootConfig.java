@@ -15,6 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "lk.ijse.aadpossyastembackendassignment")
@@ -44,6 +45,13 @@ public class WebAppRootConfig {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("lk.ijse.aadpossyastembackendassignment.entity");
         factory.setDataSource(dataSource());
+        Properties jpaProperties = new Properties();
+        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+        jpaProperties.put("hibernate.show_sql", "true");
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+//        jpaProperties.put("hibernate.connection.provider_disables_autocommit", "true");
+
+        factory.setJpaProperties(jpaProperties);
         return factory;
     }
 
