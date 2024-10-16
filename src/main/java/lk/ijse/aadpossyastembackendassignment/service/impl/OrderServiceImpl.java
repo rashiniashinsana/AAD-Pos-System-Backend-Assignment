@@ -39,12 +39,28 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void saveOrders(OrderDTO orderDto) {
-//        orderDAO.setId(AppUtil.createCustomerId());
-//        CustomerEntity savedCustomer =
-//                customerDAO.save(mapping.convertToCustomerEntity(customerDTO));
-//        if(savedCustomer == null ) {
-//            throw new DataPersistFailedException("Cannot data saved");
-//        }
+        CustomerEntity customer = customerDAO.getCustomerEntitiesById(orderDto.getCustomerId());
+
+        orderDto.setId(AppUtil.createOrderId());
+        System.out.println(orderDto);
+        var orderEntity = mapping.convertToOrderEntity(orderDto);
+//        orderEntity.setCustomer(customer);
+        List<OrderDetailsEntity> orderDetails = orderDto.getOrderDetailDTOS().stream().map(orderDetailDto -> {
+            OrderDetailsEntity orderDetailsEntity = mapping.convertToOrderDetailEntity(orderDetailDto);
+            orderDetailsEntity.setOrder(orderEntity);
+            orderDetailsDAO.save(orderDetailsEntity);
+
+            ItemEntity item = itemDAO.findById(orderDetailDto.getItemid()).orElseThrow(() -> new RuntimeException("Item not found"));
+
+            item.setQty(item.getQty() - orderDetailDto.getQty());
+            orderDetailsEntity.setItem(item);
+            itemDAO.save(item);
+            return orderDetailsEntity;
+        }).collect(Collectors.toList());
+
+        orderEntity.setOrderDetailsList(orderDetails);
+
+        orderDAO.save(orderEntity);
     }
 
     @Override
